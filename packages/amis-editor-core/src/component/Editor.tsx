@@ -29,26 +29,77 @@ import {LeftPanelsProps} from './Panel/LeftPanels';
 import {RightPanelsProps} from './Panel/RightPanels';
 
 export interface EditorProps extends PluginEventListener {
+  /*
+   * Schema 结构定义
+   */
   value: SchemaObject;
+
+  /*
+   * 表单设计器内容变化时触发
+   */
   onChange: (value: SchemaObject) => void;
+
+  /*
+   * 是否支持预览模式，默认为 true。
+   */
   preview?: boolean;
+
+  /*
+   * 是否支持移动端
+   */
   isMobile?: boolean;
+
+  /*
+   * 是否支持子设计器
+   */
   isSubEditor?: boolean;
+
+  /*
+   * 是否自动聚焦, 打开时默认选中最外层控件
+   */
   autoFocus?: boolean;
+
+  /*
+   * 自定义样式类
+   */
   className?: string;
+
+  /*
+   * schema 地址，在鼠标悬停时，超链获取最新的 schema 定义。
+   */
   $schemaUrl?: string;
+
   schemas?: Array<any>;
+
+  /*
+   * 主题配置
+   */
   theme?: string;
-  /** 工具栏模式 */
+
+  /**
+   * 工具栏模式，mini 模式下部分操作不显示，如向前插入、向后插入、更多、重复一份、选中、取消选中等
+   */
   toolbarMode?: 'default' | 'mini';
-  /** 是否需要弹框 */
+
+  /**
+   * 编辑器左侧是否显示弹窗tab
+   */
   noDialog?: boolean;
-  /** 应用语言类型 */
+
+  /**
+   * 应用语言类型
+   */
   appLocale?: string;
+
   /** 是否开启多语言 */
   i18nEnabled?: boolean;
   showCustomRenderersPanel?: boolean;
+
+  /**
+   * amis 文档地址 host
+   */
   amisDocHost?: string;
+
   superEditorData?: any;
   withSuperDataSchema?: boolean;
   /** 当前 Editor 为 SubEditor 时触发的宿主节点 */
@@ -65,6 +116,10 @@ export interface EditorProps extends PluginEventListener {
    * 比如把api地址替换成 proxy 地址。
    */
   schemaFilter?: (schema: any, isPreview?: boolean) => any;
+
+  /**
+   * amis 环境变量
+   */
   amisEnv?: RenderOptions;
 
   /**
@@ -103,14 +158,18 @@ export interface EditorProps extends PluginEventListener {
    * 事件动作面板相关配置
    */
   actionOptions?: {
-    // 是否开启老动作配置入口
+    /**
+     * 是否开启老动作配置入口
+     */
     showOldEntry?: boolean;
+
     /**
      * 通用动作集（事件动作面板左侧动作树）
      */
     actionTreeGetter?: (
       actionTree: RendererPluginAction[]
     ) => RendererPluginAction[];
+
     /**
      * 自定义动作配置
      */
@@ -121,15 +180,37 @@ export interface EditorProps extends PluginEventListener {
     globalEventGetter?: (manager: EditorManager) => IGlobalEvent[];
   };
 
-  /** 上下文变量 */
+  /**
+   * 是否开启老动作配置入口
+   */
   variables?: VariableGroup[];
-  /** 变量配置 */
+
+  /**
+   * 变量配置
+   */
   variableOptions?: VariableOptions;
 
+  /**
+   * 用于触发外部 undo 事件
+   */
   onUndo?: () => void; // 用于触发外部 undo 事件
-  onRedo?: () => void; // 用于触发外部 redo 事件
-  onSave?: () => void; // 用于触发外部 save 事件
-  onPreview?: (preview: boolean) => void; // 用于触发外部 预览 事件
+
+  /**
+   * 用于触发外部 redo 事件
+   */
+  onRedo?: () => void;
+
+  /**
+   * 用于触发外部 save 事件
+   */
+  onSave?: () => void;
+
+  /**
+   * 用于触发外部 预览 事件
+   * @param preview 是否为预览模式
+   * @returns
+   */
+  onPreview?: (preview: boolean) => void;
 
   /** 打开公式编辑器之前触发的事件 */
   onFormulaEditorOpen?: (
@@ -147,18 +228,38 @@ export interface EditorProps extends PluginEventListener {
   getAvaiableContextFields?: (node: EditorNodeType) => Promise<any>;
   readonly?: boolean;
 
+  /**
+   * 设计器插入后触发
+   * @returns
+   */
   onEditorMount?: (manager: EditorManager) => void;
+
+  /**
+   * 设计器卸载后触发
+   * @returns
+   */
   onEditorUnmount?: (manager: EditorManager) => void;
 
   children?: React.ReactNode | ((manager: EditorManager) => React.ReactNode);
 
+  /**
+   * 左侧面板组件配置，用于自定义左侧面板内容
+   */
   LeftPanelsComponent?: React.ComponentType<LeftPanelsProps>;
+
+  /**
+   * 右侧面板组件配置，用于自定义右侧面板内容
+   */
   RightPanelsComponent?: React.ComponentType<RightPanelsProps>;
 
   /**
    * 富文本编辑器配置, 用于内联编辑
    */
   richTextOptions?: any;
+
+  /**
+   * 富文本编辑器 token
+   */
   richTextToken?: string;
 }
 
